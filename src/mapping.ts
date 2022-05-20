@@ -81,9 +81,9 @@ export function handleSenderLabelUpdated(event: senderLabelUpdated): void {
     const relationId = `${receiverId}_${senderId}`;
     let relationEntity = ReceiverLabel.load(relationId);
     if (!relationEntity) {
-      relationEntity = generateRelation(from, to, event.params.label);
+      relationEntity = generateRelation(from, to, event.params.receiverRelationLabel);
     } else {
-      relationEntity.receiverLabel = event.params.label;
+      relationEntity.mailLabel = event.params.receiverRelationLabel;
       relationEntity.save();
     }
   }
