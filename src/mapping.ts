@@ -55,7 +55,7 @@ export function getReceiverLabel(from: Account , to: Account): string {
   return receiverRelationEntity.get("mailLabel")!.toString();
 }
 
-export function handlemailSent(event: mailSent): void {
+export function handleMailSent(event: mailSent): void {
   let email = MailItem.load(event.params.dataCID);
   let from = Account.load(event.params.from.toHex());
   let to = Account.load(event.params.to.toHex());
@@ -70,12 +70,38 @@ export function handlemailSent(event: mailSent): void {
   }
 }
 
-export function handleactionOnMail(event: actionOnMail): void {}
+export function handleActionOnMail(event: actionOnMail): void {}
 
-export function handlecreditsAdded(event: creditsAdded): void {}
+export function handleSenderLabelUpdated(event: senderLabelUpdated): void {}
 
-export function handlecreditsRemoved(event: creditsRemoved): void {}
+export function handleCreditsAdded(event: creditsAdded): void {
+  const user = Account.load(event.params.user.toHex());
+  if (user) {
+    user.credits = user.credits + event.params.amount;
+    user.save()
+  }
+}
 
-export function handlecreditsTransferred(event: creditsTransferred): void {}
+export function handleCreditsRemoved(event: creditsRemoved): void {
+  const user = Account.load(event.params.user.toHex());
+  if (user) {
+    if (event.params.amount <= user.credits){
+      user.credits = user.credits - event.params.amount;      
+      user.save()
+    }
+  }  
+}
 
-export function handlesenderLabelUpdated(event: senderLabelUpdated): void {}
+export function handleCreditsTransferred(event: creditsTransferred): void {
+  const from = Account.load(event.params.from.toHex());
+  const to = Account.load(event.params.to.toHex());
+  if (from && to){
+    const amount = event.params.amount;
+    if (from.credits >= amount) {
+      from.credits = from.credits - amount;
+      to.credits = to.credits + amount;
+      from.save()
+      to.save()
+    }
+  }
+}

@@ -24,15 +24,15 @@ dataSources:
         - event: AccountCreated(address,string)
           handler: handleAccountCreated
         - event: actionOnMail(address,address,string,string)
-          handler: handleactionOnMail
+          handler: handleActionOnMail
         - event: creditsAdded(address,uint256)
-          handler: handlecreditsAdded
+          handler: handleCreditsAdded
         - event: creditsRemoved(address,uint256)
-          handler: handlecreditsRemoved
+          handler: handleCreditsRemoved
         - event: creditsTransferred(address,address,uint256)
-          handler: handlecreditsTransferred
+          handler: handleCreditsTransferred
         - event: mailSent(address,address,string,uint256)
-          handler: handlemailSent
+          handler: handleMailSent
         - event: senderLabelUpdated(address,address,string)
-          handler: handlesenderLabelUpdated
+          handler: handleSenderLabelUpdated
       file: ./src/mapping.ts
