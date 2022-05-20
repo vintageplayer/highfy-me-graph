@@ -1,0 +1,47 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: undefined
+    network: rinkeby
+    source:
+      address: "0xe955AFa9bC26bB4229A53F0f8453Cd808eD38E48"
+      abi: Mail
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - AccountCreated
+        - OwnershipTransferred
+        - actionOnMail
+        - creditsAdded
+        - creditsRemoved
+        - creditsTransferred
+        - mailSent
+        - relayerChanged
+        - senderLabelUpdated
+      abis:
+        - name: Mail
+          file: ./abis/Mail.json
+      eventHandlers:
+        - event: AccountCreated(address,string)
+          handler: handleAccountCreated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: actionOnMail(address,address,string,string)
+          handler: handleactionOnMail
+        - event: creditsAdded(address,uint256)
+          handler: handlecreditsAdded
+        - event: creditsRemoved(address,uint256)
+          handler: handlecreditsRemoved
+        - event: creditsTransferred(address,address,uint256)
+          handler: handlecreditsTransferred
+        - event: mailSent(address,address,string,uint256)
+          handler: handlemailSent
+        - event: relayerChanged(address)
+          handler: handlerelayerChanged
+        - event: senderLabelUpdated(address,address,string)
+          handler: handlesenderLabelUpdated
+      file: ./src/mail.ts
