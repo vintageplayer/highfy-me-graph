@@ -124,6 +124,24 @@ export class MailItem extends Entity {
     this.set("dataCID", Value.fromString(value));
   }
 
+  get credits(): BigInt {
+    let value = this.get("credits");
+    return value!.toBigInt();
+  }
+
+  set credits(value: BigInt) {
+    this.set("credits", Value.fromBigInt(value));
+  }
+
+  get creditStatus(): string {
+    let value = this.get("creditStatus");
+    return value!.toString();
+  }
+
+  set creditStatus(value: string) {
+    this.set("creditStatus", Value.fromString(value));
+  }
+  
   get receiverLabel(): string {
     let value = this.get("receiverLabel");
     return value!.toString();

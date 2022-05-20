@@ -4,7 +4,7 @@ type Account @entity(immutable: true) {
   keyCID: String! # string
   mailsSent: [MailItem!] @derivedFrom(field: "from")
   inbox: [MailItem!] @derivedFrom(field: "to")
-  credits: BigInt @default(value: 0)
+  credits: BigInt!
 }
 
 type MailItem @entity(immutable: true) {
@@ -12,7 +12,18 @@ type MailItem @entity(immutable: true) {
   from: Account! # address
   to: Account! # address
   dataCID: String! # string
+  credits: BigInt!
+  creditStatus: MailItemCreditStatus!
   receiverLabel: ReceivedMailLabels! # current-default or explicitly set
+}
+
+enum MailItemCreditStatus {
+  INVALID
+  COLLECTED
+  PENDING
+  REFUNDED
+  CANCELLED
+  TIMEOUT
 }
 
 enum ReceivedMailLabels {

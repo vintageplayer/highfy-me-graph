@@ -65,7 +65,15 @@ export function handleMailSent(event: mailSent): void {
     mailEntity.from = Account.load(event.params.from.toHex())!;
     mailEntity.to = Account.load(event.params.to.toHex())!;
     mailEntity.dataCID = event.params.dataCID;
-    mailEntity.receiverLabel = getReceiverLabel(from, to);
+    if (event.params.credits > BigInt.fromI32(0) && event.params.credits >= from.credits) {
+      mailEntity.receiverLabel = "COLLECT";
+      mailEntity.creditStatus = "PENDING";
+      mailEntity.credits = event.params.credits;
+    } else {
+      mailEntity.receiverLabel = getReceiverLabel(from, to);
+      mailEntity.creditStatus = "INVALID";
+      mailEntity.credits = BigInt.fromI32(0);
+    }
     mailEntity.save();
   }
 }
