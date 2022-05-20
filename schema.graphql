@@ -12,13 +12,14 @@ type MailItem @entity(immutable: true) {
   from: Account! # address
   to: Account! # address
   dataCID: String! # string
-  receiverLabel: String! # current-default or explicitly set
+  receiverLabel: ReceivedMailLabels! # current-default or explicitly set
 }
 
 enum ReceivedMailLabels {
   INBOX
   SUBSCRIPTION
   SPAM
+  COLLECT
 }
 
 type ReceiverLabel @entity {

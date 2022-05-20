@@ -72,7 +72,22 @@ export function handleMailSent(event: mailSent): void {
 
 export function handleActionOnMail(event: actionOnMail): void {}
 
-export function handleSenderLabelUpdated(event: senderLabelUpdated): void {}
+export function handleSenderLabelUpdated(event: senderLabelUpdated): void {
+  let from = Account.load(event.params.from.toHex());
+  let to = Account.load(event.params.to.toHex());
+  if (from && to) {
+    const receiverId = to.get('id')!;
+    const senderId = from.get('id')!;
+    const relationId = `${receiverId}_${senderId}`;
+    let relationEntity = ReceiverLabel.load(relationId);
+    if (!relationEntity) {
+      relationEntity = generateRelation(from, to, event.params.label);
+    } else {
+      relationEntity.receiverLabel = event.params.label;
+      relationEntity.save();
+    }
+  }
+}
 
 export function handleCreditsAdded(event: creditsAdded): void {
   const user = Account.load(event.params.user.toHex());
