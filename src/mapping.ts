@@ -48,8 +48,9 @@ export function getReceiverLabel(from: Account , to: Account): string {
   // Creating a Default Entry in INBOX if not already present
   if (!senderRelationEntity) {
     generateRelation(to, from, "INBOX");
-  } else if (senderRelationEntity.get('mailLabel')!.toString() === 'SPAM') {
+  } else if (senderRelationEntity.get('mailLabel')!.toString() == 'SPAM') {
     senderRelationEntity.mailLabel = "INBOX"
+    senderRelationEntity.save()
   }
 
   const receiverRelationId = `${receiverId}_${senderId}`;
@@ -71,6 +72,7 @@ export function handleMailSent(event: mailSent): void {
     mailEntity.to = Account.load(event.params.to.toHex())!;
     mailEntity.dataCID = event.params.dataCID;
     if (event.params.credits > BigInt.fromI32(0) && from.credits >= event.params.credits) {
+      getReceiverLabel(from, to); // To Ensure Any Replies Land in Inbox for sender
       mailEntity.receiverLabel = "COLLECT";
       mailEntity.creditStatus = "PENDING";
       mailEntity.credits = event.params.credits;
