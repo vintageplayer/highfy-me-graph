@@ -18,7 +18,8 @@ export function handleAccountCreated(event: AccountCreated): void {
     let accountEntity = new Account(event.params.accountAddress.toHex());
     accountEntity.accountAddress = event.params.accountAddress;
     accountEntity.keyCID = event.params.keyCID;
-    accountEntity.credits = BigInt.fromI32(0);
+    // Giving a default 5 credits to every new user sign up
+    accountEntity.credits = BigInt.fromI32(5);
     accountEntity.save();
   }
 }
