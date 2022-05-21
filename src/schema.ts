@@ -100,7 +100,7 @@ export class MailItem extends Entity {
   }
 
   get from(): Account {
-    return Account.load(this.get("from"));
+    return Account.load(this.get("from")!.toString())!;
   }
 
   set from(value: Account) {
@@ -108,7 +108,7 @@ export class MailItem extends Entity {
   }
 
   get to(): Account {
-    return Account.load(this.get("to"));
+    return Account.load(this.get("to")!.toString())!;
   }
 
   set to(value: Account) {
@@ -141,7 +141,7 @@ export class MailItem extends Entity {
   set creditStatus(value: string) {
     this.set("creditStatus", Value.fromString(value));
   }
-  
+
   get receiverLabel(): string {
     let value = this.get("receiverLabel");
     return value!.toString();

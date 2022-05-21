@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, log } from "@graphprotocol/graph-ts"
 import {
   AccountCreated,
   mailSent,
@@ -11,8 +11,9 @@ import {
 import { Account, MailItem, ReceiverLabel } from "./schema"
 
 export function handleAccountCreated(event: AccountCreated): void {
+  // Check if account already exists
   let accountEntity = Account.load(event.params.accountAddress.toHex());
-
+  // Create An Account if not Already Present
   if (!accountEntity) {
     let accountEntity = new Account(event.params.accountAddress.toHex());
     accountEntity.accountAddress = event.params.accountAddress;
@@ -35,12 +36,15 @@ export function generateRelation(from: Account , to: Account, label: string): Re
 
   return relationEntity;
 }
+
 export function getReceiverLabel(from: Account , to: Account): string {
   const receiverId = to.get('id')!;
   const senderId = from.get('id')!;
 
   const senderRelationId = `${senderId}_${receiverId}`;
   let senderRelationEntity = ReceiverLabel.load(senderRelationId);
+
+  // Creating a Default Entry in INBOX if not already present
   if (!senderRelationEntity) {
     generateRelation(to, from, "INBOX");
   } else if (senderRelationEntity.get('mailLabel')!.toString() === 'SPAM') {
@@ -65,11 +69,12 @@ export function handleMailSent(event: mailSent): void {
     mailEntity.from = Account.load(event.params.from.toHex())!;
     mailEntity.to = Account.load(event.params.to.toHex())!;
     mailEntity.dataCID = event.params.dataCID;
-    if (event.params.credits > BigInt.fromI32(0) && event.params.credits >= from.credits) {
+    if (event.params.credits > BigInt.fromI32(0) && from.credits >= event.params.credits) {
       mailEntity.receiverLabel = "COLLECT";
       mailEntity.creditStatus = "PENDING";
       mailEntity.credits = event.params.credits;
-      from.credits = from.credits - event.params.credits
+      from.credits = from.credits - event.params.credits;
+      from.save()
     } else {
       mailEntity.receiverLabel = getReceiverLabel(from, to);
       mailEntity.creditStatus = "INVALID";
@@ -79,7 +84,46 @@ export function handleMailSent(event: mailSent): void {
   }
 }
 
-export function handleActionOnMail(event: actionOnMail): void {}
+export function handleActionOnMail(event: actionOnMail): void {
+   let email = MailItem.load(event.params.dataCID);
+   let from = Account.load(event.params.from.toHex());
+   let to = Account.load(event.params.to.toHex());
+
+   if (email && from && to && (email.from.id == from.id) && (email.to.id == to.id)) {
+    if (email.creditStatus == 'PENDING') {
+      const receiverId = to.get('id')!.toString();
+      const senderId = from.get('id')!.toString();
+      const relationId = `${receiverId}_${senderId}`;
+      let relationEntity = ReceiverLabel.load(relationId)!;
+      if (event.params.action == 'ACCEPT_MAIL') {
+        email.creditStatus = 'COLLECTED';
+        email.receiverLabel = 'INBOX';
+        relationEntity.mailLabel = "INBOX";
+        relationEntity.save()
+        to.credits = to.credits + email.credits;
+        to.save()
+      } else if (event.params.action == 'REFUND_MAIL') {
+        email.creditStatus = 'REFUNDED';
+        email.receiverLabel = 'INBOX';
+        relationEntity.mailLabel = "INBOX";
+        relationEntity.save()
+        from.credits = from.credits + email.credits;
+        from.save()
+      } else if (event.params.action == 'SPAM_MAIL') {
+        email.creditStatus = 'SPAM';
+        email.receiverLabel = 'SPAM';
+        relationEntity.mailLabel = "SPAM";
+        relationEntity.save()
+        to.credits = to.credits + email.credits;
+        to.save()
+      }
+    } else {
+      email.receiverLabel = event.params.action;
+      log.info('Mail not of pending credits status', [])
+    }
+    email.save();
+   }
+}
 
 export function handleSenderLabelUpdated(event: senderLabelUpdated): void {
   let from = Account.load(event.params.from.toHex());

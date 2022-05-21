@@ -1,4 +1,4 @@
-type Account @entity(immutable: true) {
+type Account @entity {
   id: ID!
   accountAddress: Bytes! # address
   keyCID: String! # string
@@ -7,7 +7,7 @@ type Account @entity(immutable: true) {
   credits: BigInt!
 }
 
-type MailItem @entity(immutable: true) {
+type MailItem @entity {
   id: ID!
   from: Account! # address
   to: Account! # address
@@ -20,6 +20,7 @@ type MailItem @entity(immutable: true) {
 enum MailItemCreditStatus {
   INVALID
   COLLECTED
+  SPAM
   PENDING
   REFUNDED
   CANCELLED
