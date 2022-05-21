@@ -1,7 +1,11 @@
 [
   {
     "inputs": [
-      { "internalType": "address", "name": "relayer", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "relayer",
+        "type": "address"
+      }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -209,8 +213,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "addCredits",
     "outputs": [],
@@ -219,8 +231,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "from", "type": "address" },
-      { "internalType": "string", "name": "keyCID", "type": "string" }
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "keyCID",
+        "type": "string"
+      }
     ],
     "name": "createAccount",
     "outputs": [],
@@ -229,7 +249,11 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "keyCID", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "keyCID",
+        "type": "string"
+      }
     ],
     "name": "createAccount",
     "outputs": [],
@@ -245,9 +269,26 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "to", "type": "address" },
-      { "internalType": "string", "name": "dataCID", "type": "string" },
-      { "internalType": "string", "name": "action", "type": "string" }
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "dataCID",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "action",
+        "type": "string"
+      }
     ],
     "name": "mailAction",
     "outputs": [],
@@ -256,8 +297,62 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "from", "type": "address" },
-      { "internalType": "string", "name": "label", "type": "string" }
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "dataCID",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "action",
+        "type": "string"
+      }
+    ],
+    "name": "mailAction",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "label",
+        "type": "string"
+      }
+    ],
+    "name": "modifySenderLabel",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "label",
+        "type": "string"
+      }
     ],
     "name": "modifySenderLabel",
     "outputs": [],
@@ -267,7 +362,13 @@
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -280,9 +381,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "to", "type": "address" },
-      { "internalType": "string", "name": "dataCID", "type": "string" },
-      { "internalType": "uint256", "name": "credits", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "dataCID",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "credits",
+        "type": "uint256"
+      }
     ],
     "name": "sendMail",
     "outputs": [],
@@ -291,10 +404,26 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "from", "type": "address" },
-      { "internalType": "address", "name": "to", "type": "address" },
-      { "internalType": "string", "name": "dataCID", "type": "string" },
-      { "internalType": "uint256", "name": "credits", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "dataCID",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "credits",
+        "type": "uint256"
+      }
     ],
     "name": "sendMail",
     "outputs": [],
@@ -303,7 +432,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "relayer", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "relayer",
+        "type": "address"
+      }
     ],
     "name": "setRelayer",
     "outputs": [],
@@ -312,9 +445,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "from", "type": "address" },
-      { "internalType": "address", "name": "to", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "transferCredits",
     "outputs": [],
@@ -323,7 +468,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "transferOwnership",
     "outputs": [],
@@ -332,8 +481,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "withdrawCredits",
     "outputs": [],
