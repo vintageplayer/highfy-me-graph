@@ -71,6 +71,7 @@ export function handleMailSent(event: mailSent): void {
     mailEntity.from = Account.load(event.params.from.toHex())!;
     mailEntity.to = Account.load(event.params.to.toHex())!;
     mailEntity.dataCID = event.params.dataCID;
+    mailEntity.blockTime = event.block.timestamp;
     if (event.params.credits > BigInt.fromI32(0) && from.credits >= event.params.credits) {
       getReceiverLabel(from, to); // To Ensure Any Replies Land in Inbox for sender
       mailEntity.receiverLabel = "COLLECT";

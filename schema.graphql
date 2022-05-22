@@ -12,6 +12,7 @@ type MailItem @entity {
   from: Account! # address
   to: Account! # address
   dataCID: String! # string
+  blockTime: BigInt!
   credits: BigInt!
   creditStatus: MailItemCreditStatus!
   receiverLabel: ReceivedMailLabels! # current-default or explicitly set

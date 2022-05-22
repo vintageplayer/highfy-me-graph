@@ -124,6 +124,15 @@ export class MailItem extends Entity {
     this.set("dataCID", Value.fromString(value));
   }
 
+  get blockTime(): BigInt {
+    let value = this.get("blockTime");
+    return value!.toBigInt();
+  }
+
+  set blockTime(value: BigInt) {
+    this.set("blockTime", Value.fromBigInt(value));
+  }
+
   get credits(): BigInt {
     let value = this.get("credits");
     return value!.toBigInt();
