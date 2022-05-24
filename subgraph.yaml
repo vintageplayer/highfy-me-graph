@@ -6,9 +6,9 @@ dataSources:
     name: Mail
     network: rinkeby
     source:
-      address: "0xe955AFa9bC26bB4229A53F0f8453Cd808eD38E48"
+      address: "0x8ae0Fd82957D7354efE77cb629CF6fF0f6647ca7"
       abi: Mail
-      startBlock: 10708690
+      startBlock: 10715500
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
